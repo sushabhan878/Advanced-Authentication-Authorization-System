@@ -7,10 +7,10 @@ import authRouter from "./routes/authRout.js";
 import userRouter from "./routes/userRoutes.js";
 const app = express();
 const port = process.env.PORT || 4000;
-
+const allowedOrigin = ["http://localhost:5173"];
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ credentials: true }));
+app.use(cors({ origin: allowedOrigin, credentials: true }));
 
 //API End points ---->
 
