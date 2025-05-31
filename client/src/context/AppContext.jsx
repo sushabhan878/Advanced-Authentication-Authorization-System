@@ -1,30 +1,52 @@
 import axios from "axios";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  const [isLoggerin, setIsLoggedin] = useState(false);
-  const [userData, setUserData] = useState(false);
+  const [isLoggedin, setIsLoggedin] = useState(false);
+  const [userData, setUserData] = useState(null);
 
-  const getUserDate = async () => {
+  const getAuthState = async () => {
     try {
-      const { data } = await axios.get(backendUrl + "/api/user/data");
-      data.success ? setUserData(data.userData) : toast.error(data.message);
+      const { data } = await axios.get(backendUrl + "/api/auth/is-auth", {
+        withCredentials: true,
+      });
+      if (data.success) {
+        setIsLoggedin(true);
+        getUserData();
+      }
     } catch (error) {
-      toast.error(data.message);
+      toast.error(error.response?.data?.message || error.message);
     }
   };
+
+  const getUserData = async () => {
+    try {
+      const { data } = await axios.get(backendUrl + "/api/user/data", {
+        withCredentials: true,
+      });
+      data.success ? setUserData(data.userData) : toast.error(data.message);
+    } catch (error) {
+      toast.error(error.response?.data?.message || error.message);
+    }
+  };
+
+  useEffect(() => {
+    getAuthState();
+  }, []);
+
   const value = {
     backendUrl,
-    isLoggerin,
+    isLoggedin,
     setIsLoggedin,
     userData,
     setUserData,
-    getUserDate,
+    getUserData,
   };
+
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
   );
