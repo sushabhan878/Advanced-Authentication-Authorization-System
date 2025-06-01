@@ -7,7 +7,10 @@ import authRouter from "./routes/authRout.js";
 import userRouter from "./routes/userRoutes.js";
 const app = express();
 const port = process.env.PORT || 4000;
-const allowedOrigin = ["http://localhost:5173"];
+const allowedOrigin = [
+  "http://localhost:5173",
+  "https://advanced-authentication-authorizati-lac.vercel.app/",
+];
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: allowedOrigin, credentials: true }));
