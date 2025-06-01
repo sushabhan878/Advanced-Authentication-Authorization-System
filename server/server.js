@@ -8,7 +8,6 @@ import userRouter from "./routes/userRoutes.js";
 const app = express();
 const port = process.env.PORT || 4000;
 const allowedOrigin = [
-  "http://localhost:5173",
   "https://advanced-authentication-authorizati-lac.vercel.app",
 ];
 app.use(express.json());
