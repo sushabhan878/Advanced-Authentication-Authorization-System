@@ -25,7 +25,7 @@ const Header = () => {
       </h2>
       <p className="mb-8 max-w-md">
         Lets start with a quick product tour, and we will have you up and
-        running on tdime !
+        running on time !
       </p>
       <button className="border border-gray-500 rounded-full px-8 py-2.5  hover:bg-gray-100 transition-all">
         Get Started NOW!
