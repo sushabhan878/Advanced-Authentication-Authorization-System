@@ -10,10 +10,14 @@ const port = process.env.PORT || 4000;
 const allowedOrigin = [
   "https://advanced-authentication-authorizati-lac.vercel.app",
 ];
+
+app.use(
+  cors({ methods: ["GET", "POST"], origin: allowedOrigin, credentials: true })
+);
+
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: allowedOrigin, credentials: true }));
-
+connectDB();
 //API End points ---->
 
 app.get("/", (req, res) => {
@@ -23,6 +27,5 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 
 app.listen(port, () => {
-  console.log(`Server started on port ${port}`);
-  connectDB();
+  console.log("App is running");
 });
